@@ -43,9 +43,4 @@ if (isset($params[0]) & !empty($params[0]))
 		echo "this page doesn't exsit";
 	}
 	
-}else
-{
-	require_once "controller/Home.php";
-	$obj=new Home();
-	$obj->index();
 }
