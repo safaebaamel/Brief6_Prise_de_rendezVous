@@ -1,8 +1,9 @@
 <?php
 
-    class ApiUserController {
+    class ApiReservationController {
 
-        public function readUser() {
+
+        public function readReservation() {
             header("Access-Control-Allow-Origin: *");
             header("Content-Type: application/json; charset=UTF-8");
             header("Access-Control-Allow-Methods: POST");
@@ -11,33 +12,35 @@
             $database = new Database();
             $db = $database->getConnection();
             
-            $client = new client($db);
+            $reservation = new reservation($db);
             
             $data = json_decode(file_get_contents("php://input"));
 
-            echo "read user";
-            
+            // $reservation->Reservation_id = $data->Reservation_id;
+            // $reservation->creaneau_id = $data->creneau_id;
+            // $reservation->date = $data->date;
+            // $reservation->subject = $data->subject;
                     
-            $stm = $client->getAllUSers();
-            $countClients = $stm->rowCount();
+            $stm = $reservation->getAllReservation();
+            $countReservation = $stm->rowCount();
 
-            if($countClients > 0) {
-                $clientArr = array();
-                $clientArr["body"] = array();
-                $clientArr["countClients"] = $countClients;
+            if($countReservation > 0) {
+                $reservArr = array();
+                $reservArr["body"] = array();
+                $reservArr["countClients"] = $countReservation;
 
                 while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
                     extract($row);
                     $e = array(
+                        "Reservation_id" => $Reservation_id,
                         "user_id" => $user_id,
-                        "Fname" => $Fname,
-                        "Lname" => $Lname,
-                        "Email" => $Email,
-                        "Reference" => $Reference,
+                        "creneau_id" => $creneau_id,
+                        "date" => $date,
+                        "subject" => $subject,
                     );
-                        array_push($clientArr["body"], $e);
+                        array_push($reservArr["body"], $e);
                     }
-                    echo json_encode($clientArr);
+                    echo json_encode($reservArr);
                     } else {
                         http_response_code(404);
                         echo json_encode(
@@ -46,7 +49,7 @@
             }
         }
 
-        public function createUser() {  
+        public function createReservation() {  
             header("Access-Control-Allow-Origin: *");
             header("Content-Type: application/json; charset=UTF-8");
             header("Access-Control-Allow-Methods: POST");
@@ -55,21 +58,48 @@
             $database = new Database();
             $db = $database->getConnection();
             
-            $client = new client($db);
+            $reservation = new reservation($db);
             
             $data = json_decode(file_get_contents("php://input"));
 
-            $client->Fname = $data->Fname;
-            $client->Lname = $data->Lname;
-            $client->Email = $data->Email;
+            
+            $reservation->user_id = $data->user_id;
+            $reservation->creneau_id = $data->creneau_id;
+            $reservation->date = $data->date;
+            $reservation->subject = $data->subject;
 
-            if($client->createUser()){
-                echo 'Client created successfully.';
+            if($reservation->createReservation()){
+                echo 'Reservation Was Created successfully.';
             } else{
-                echo 'Client could not be created.';
+                echo 'Reservation could not be created.';
             }
         }
 
+        public function reservationToken() { 
+
+            header("Access-Control-Allow-Origin: *");
+            header("Content-Type: application/json; charset=UTF-8");
+            header("Access-Control-Allow-Methods: POST");
+            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        
+            $database = new Database();
+            $db = $database->getConnection();
+            
+            $reservation = new reservation($db);
+            
+            $data = json_decode(file_get_contents("php://input"));
+
+            
+            $reservation->reference = $data->reference;
+            
+            if ($reservation->reference->existToken()) {
+                if($reservation->reservationToken()){
+                    echo 'Reservation Was Created successfully.';
+                } else{
+                    echo 'Reservation could not be created.';
+                }
+            }
+        
         public function deleteUser() {
             header("Access-Control-Allow-Origin: *");
             header("Content-Type: application/json; charset=UTF-8");
@@ -79,39 +109,15 @@
             $database = new Database();
             $db = $database->getConnection();
             
-            $client = new client($db);
+            $client = new reservation($db);
             
             $data = json_decode(file_get_contents("php://input"));
 
             $client->user_id = $data->user_id;
             if($client->deleteUser()){
-                echo json_encode("Client deleted.");
+                echo json_encode("Reservation deleted.");
             } else{
                 echo json_encode("Data could not be deleted");
-            }
-        }
-
-        public function updateClient() {
-            header("Access-Control-Allow-Origin: *");
-            header("Content-Type: application/json; charset=UTF-8");
-            header("Access-Control-Allow-Methods: POST");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-            $database = new Database();
-            $db = $database->getConnection();
-            
-            $client = new client($db);
-            
-            $data = json_decode(file_get_contents("php://input"));
-            $client->user_id = $data->user_id;
-            $client->Fname = $data->Fname;
-            $client->Lname = $data->Lname;
-            $client->Email = $data->Email;
-
-            if($client->updateClient()){
-                echo json_encode("Client data updated.");
-            } else{
-                echo json_encode("Data could not be updated");
             }
         }
 

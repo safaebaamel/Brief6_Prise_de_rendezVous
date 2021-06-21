@@ -1,17 +1,17 @@
 <?php
 
-    require_once '../config/database.php';
-
-    class client {
+    class reservation {
 
         // Connection
         private $conn;
 
         // Table
-        private $db_table = "reservation";
+        private $db_table = "reservaation";
 
         // Columns
         public $user_id;
+        public $Reservation_id;
+        public $creneau_id;
         public $date;
         public $subject;
 
@@ -28,23 +28,24 @@
             return $stmt;
         }
        
-        // CREATE
+        // New Reservation
         public function createReservation(){
 
-            $sqlQuery = "INSERT INTO
-                        ". $this->db_table ."
-                    SET
-                        date = :date, 
-                        subject = :subject"
+            $sqlQuery = "INSERT reservaation SET  user_id=:user_id, creneau_id=:creneau_id, date=:date, subject=:subject"; 
 
             $stmt = $this->conn->prepare($sqlQuery);
         
-            // sanitize
+            // // sanitize
+
+            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+            $this->creneau_id=htmlspecialchars(strip_tags($this->creneau_id));
             $this->date=htmlspecialchars(strip_tags($this->date));
             $this->subject=htmlspecialchars(strip_tags($this->subject));
            
         
             // bind data
+            $stmt->bindParam(":creneau_id", $this->creneau_id);
+            $stmt->bindParam(":user_id", $this->user_id);
             $stmt->bindParam(":date", $this->date);
             $stmt->bindParam(":subject", $this->subject);
         
@@ -54,7 +55,34 @@
             return false;
         }
 
-        // Get User From ID
+
+        public function reservationToken(){
+
+            $sqlQuery = "INSERT reservaation SET  user_id=:user_id, creneau_id=:creneau_id, date=:date, subject=:subject"; 
+
+            $stmt = $this->conn->prepare($sqlQuery);
+        
+            // // sanitize
+
+            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+            $this->creneau_id=htmlspecialchars(strip_tags($this->creneau_id));
+            $this->date=htmlspecialchars(strip_tags($this->date));
+            $this->subject=htmlspecialchars(strip_tags($this->subject));
+           
+        
+            // bind data
+            $stmt->bindParam(":creneau_id", $this->creneau_id);
+            $stmt->bindParam(":user_id", $this->user_id);
+            $stmt->bindParam(":date", $this->date);
+            $stmt->bindParam(":subject", $this->subject);
+        
+            if($stmt->execute()){
+               return true;
+            }
+            return false;
+        }
+
+        // Get Reservation From ID
         public function getReservationFromID(){
             $sqlQuery = "SELECT
                         Reservation_id,
@@ -75,42 +103,11 @@
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            $this->Fname = $dataRow['Fname'];
-            $this->Lname = $dataRow['Lname'];
-            $this->Email = $dataRow['Email'];
-            $this->Reservation = $dataRow['Reservation'];
-        }        
-
-        // UPDATE
-        public function updateClient(){
-            $sqlQuery = "UPDATE
-                        ". $this->db_table ."
-                    SET
-                        Fname = :Fname, 
-                        Lname = :Lname, 
-                        Email = :Email 
-                    WHERE 
-                        user_id = :user_id";
-                        
-        
-            $stmt = $this->conn->prepare($sqlQuery);
-        
-            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
-            $this->Fname=htmlspecialchars(strip_tags($this->Fname));
-            $this->Lname=htmlspecialchars(strip_tags($this->Lname));
-            $this->Email=htmlspecialchars(strip_tags($this->Email));
-        
-            // bind data
-            $stmt->bindParam(":user_id", $this->user_id);
-            $stmt->bindParam(":Fname", $this->Fname);
-            $stmt->bindParam(":Lname", $this->Lname);
-            $stmt->bindParam(":Email", $this->Email);
-           
-            if($stmt->execute()){
-               return true;
-            }
-            return false;
-        }
+            $this->Reservation_id = $dataRow['Reservation_id'];
+            $this->creneau_id = $dataRow['creneau_id'];
+            $this->date = $dataRow['date'];
+            $this->subject = $dataRow['subject'];
+        } 
 
         // DELETE USER
 
