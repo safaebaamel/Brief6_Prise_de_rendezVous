@@ -62,10 +62,15 @@
             $client->Fname = $data->Fname;
             $client->Lname = $data->Lname;
             $client->Email = $data->Email;
+            $tk = $client->createUser();
+           
 
-            if($client->createUser()){
-                echo 'Client created successfully.';
-            } else{
+            if($client->createUser()) {
+                $Token = array(
+                    "Reference" => $tk, 
+                );
+                echo json_encode($Token);
+            } else {
                 echo 'Client could not be created.';
             }
         }

@@ -30,20 +30,20 @@
 
         // EXIST TOKEN ?
 
-        public function existToken() {
+        // public function existToken() {
             
-            $sqlQuery = "SELECT Reference FROM". $this->db_table . "WHERE Reference= ? LIMIT 0,1";
+        //     $sqlQuery = "SELECT Reference FROM". $this->db_table . "WHERE Reference= ? LIMIT 0,1";
 
-            $stmt = $this->conn->prepare($sqlQuery);
-            $stmt->bindParam(1, $this->Reference);
-            $stmt->execute();
-            $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($dataRow == 1 {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        //     $stmt = $this->conn->prepare($sqlQuery);
+        //     $stmt->bindParam(1, $this->Reference);
+        //     $stmt->execute();
+        //     $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     if ($dataRow == 1 {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
 
         // CREATE
         public function createUser(){
@@ -71,9 +71,10 @@
             $stmt->bindParam(":Reference", $this->Reference);
         
             if($stmt->execute()){
-               return true;
+               return $this->Reference;
+            } else {
+                return false;
             }
-            return false;
         }
 
         // Get User From ID

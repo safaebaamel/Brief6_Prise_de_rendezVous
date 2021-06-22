@@ -1,17 +1,15 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" >
       <label >First Name:</label>
-      <input type="text" required v-model="firstName">
+      <input type="text" required v-model="Fname">
 
       <label >Last Name:</label>
-      <input type="text" required v-model="lastName">
+      <input type="text" required v-model="Lname">
 
       <label >Email:</label>
-      <input type="text" required v-model="email">
-      
-      <div class="submit">
-          <button>Join Us</button>
-      </div>
+      <input type="text" required v-model="Email">
+
+      <button type="submit" class="submit">Join Us</button>
   </form>
   
   
@@ -19,20 +17,35 @@
 
 <script>
 export default {
-    name: 'firstFormulaire',
-    data() {
+    name: 'HelloWorld',
+    data(){
         return {
-            firstName: '',
-            lastName: '',
-            email: ''
+            Fname: '',
+            Lname: '',
+            Email: '',
+            result:undefined,
         }
     },
-    methods: {
-    handleSubmit() {
-        console.log('form submitted')
-    }
-    }
+    methods:{
+        async handleSubmit(){
 
+        const data = {
+            Fname: this.Fname,
+            Lname: this.Lname,
+            Email: this.Email,
+        };
+      console.log(data);
+            var res = fetch("http://localhost/Brief6/ApiUserController/createUser", {
+            method: "POST",
+            header: "Content-type: application/json",
+
+            body: JSON.stringify(data),
+            });
+            this.result = await res.json();
+            console.log(this.result.Reference);
+
+        }
+    }
 }
 </script>
 
