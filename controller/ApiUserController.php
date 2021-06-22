@@ -64,8 +64,7 @@
             $client->Email = $data->Email;
             $tk = $client->createUser();
            
-
-            if($client->createUser()) {
+            if($tk) {
                 $Token = array(
                     "Reference" => $tk, 
                 );

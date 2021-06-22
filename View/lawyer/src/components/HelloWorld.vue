@@ -23,7 +23,7 @@ export default {
             Fname: '',
             Lname: '',
             Email: '',
-            result:undefined,
+            result:{},
         }
     },
     methods:{
@@ -33,16 +33,22 @@ export default {
             Fname: this.Fname,
             Lname: this.Lname,
             Email: this.Email,
+            result: this.result,
         };
       console.log(data);
-            var res = fetch("http://localhost/Brief6/ApiUserController/createUser", {
+            fetch("http://localhost/Brief6/ApiUserController/createUser", {
             method: "POST",
             header: "Content-type: application/json",
 
             body: JSON.stringify(data),
-            });
-            this.result = await res.json();
-            console.log(this.result.Reference);
+            })
+            .then (function(response) {
+                return response.json();
+            })
+            .then (x => {
+                console.log(x);
+                alert("Please keep your token: " + x.Reference);
+            })
 
         }
     }

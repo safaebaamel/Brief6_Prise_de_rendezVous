@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-      <label >Insert Your Reference</label>
+      <label>Insert Your Reference</label>
       <input type="text" required v-model="reference">
 
       <div class="submit">
@@ -16,15 +16,31 @@ export default {
     name: 'firstFormulaire',
     data() {
         return {
-            firstName: '',
-            lastName: '',
-            email: ''
+            Reference: '',
         }
     },
-    methods: {
-    handleSubmit() {
-        console.log('form submitted')
-    }
+    methods:{
+        async handleSubmit(){
+
+        const data = {
+            Reference: this.Reference,
+        };
+      console.log(data);
+        fetch("http://localhost/Brief6/ApiUserController/", {
+        method: "POST",
+        header: "Content-type: application/json",
+
+        body: JSON.stringify(data),
+        })
+        .then (function(response) {
+        return response.json();
+        })
+        .then (x => {
+            console.log(x);
+            alert("Welcome");
+        })
+
+        }
     }
 
 }

@@ -71,7 +71,7 @@
             $stmt->bindParam(":Reference", $this->Reference);
         
             if($stmt->execute()){
-               return $this->Reference;
+               return $token;
             } else {
                 return false;
             }
