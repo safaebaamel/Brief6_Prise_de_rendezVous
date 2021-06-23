@@ -1,13 +1,13 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     class ApiUserController {
 
         public function readUser() {
-            header("Access-Control-Allow-Origin: *");
-            header("Content-Type: application/json; charset=UTF-8");
-            header("Access-Control-Allow-Methods: POST");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        
+
             $database = new Database();
             $db = $database->getConnection();
             
@@ -46,12 +46,44 @@
             }
         }
 
+        public function getInfoFromReference() {
+            $database = new Database();
+            $db = $database->getConnection();
+            
+            $client = new client($db);
+            
+            $data = json_decode(file_get_contents("php://input"));
+
+            
+            $client->Reference = $data->Reference;
+            
+            $count = $client->getUserFromReference();
+
+            $user_id = $client->getUserFromReference();
+            // die(print_r($user_id));
+            // if($user_id != null){
+            //     echo $user_id;
+            //     $ID = array(
+            //         "user_id" => $user_id, 
+            //     );
+            //     echo json_encode($ID);
+            // } else {
+            //     echo 'Client could not be found.';
+            //     }
+            if($client->getUserFromReference()){
+                $arr = array('id_user' => 
+                    $user_id , 'existe' => true);
+                echo json_encode($arr);
+            }
+            else{
+echo "maken walo";
+            }
+        }
+    
+
+
         public function createUser() {  
-            header("Access-Control-Allow-Origin: *");
-            header("Content-Type: application/json; charset=UTF-8");
-            header("Access-Control-Allow-Methods: POST");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        
+            
             $database = new Database();
             $db = $database->getConnection();
             
@@ -96,11 +128,7 @@
         }
 
         public function updateClient() {
-            header("Access-Control-Allow-Origin: *");
-            header("Content-Type: application/json; charset=UTF-8");
-            header("Access-Control-Allow-Methods: POST");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+            
             $database = new Database();
             $db = $database->getConnection();
             

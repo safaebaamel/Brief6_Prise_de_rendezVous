@@ -36,19 +36,19 @@ export default {
             result: this.result,
         };
       console.log(data);
-            fetch("http://localhost/Brief6/ApiUserController/createUser", {
-            method: "POST",
-            header: "Content-type: application/json",
+        fetch("http://localhost/Brief6/ApiUserController/createUser", {
+        method: "POST",
+        header: "Content-type: application/json",
 
-            body: JSON.stringify(data),
-            })
-            .then (function(response) {
-                return response.json();
-            })
-            .then (x => {
-                console.log(x);
-                alert("Please keep your token: " + x.Reference);
-            })
+        body: JSON.stringify(data),
+        })
+        .then (function(response) {
+            return response.json();
+        })
+        .then (x => {
+            console.log(x);
+            alert("Please keep your token: " + x.Reference);
+        })
 
         }
     }

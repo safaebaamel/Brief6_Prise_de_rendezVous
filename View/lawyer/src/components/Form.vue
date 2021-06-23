@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="handleSubmit">
       <label>Insert Your Reference</label>
-      <input type="text" required v-model="reference">
+      <input type="text" required v-model="Reference">
 
       <div class="submit">
           <button>Submit</button>
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'firstFormulaire',
+    name: 'Form',
     data() {
         return {
             Reference: '',
@@ -26,20 +26,10 @@ export default {
             Reference: this.Reference,
         };
       console.log(data);
-        fetch("http://localhost/Brief6/ApiUserController/", {
-        method: "POST",
-        header: "Content-type: application/json",
-
-        body: JSON.stringify(data),
-        })
-        .then (function(response) {
-        return response.json();
-        })
-        .then (x => {
-            console.log(x);
-            alert("Welcome");
-        })
-
+        fetch("http://localhost/Brief6/ApiUserController/getInfoFromReference")
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
         }
     }
 

@@ -28,23 +28,6 @@
             return $stmt;
         }
 
-        // EXIST TOKEN ?
-
-        // public function existToken() {
-            
-        //     $sqlQuery = "SELECT Reference FROM". $this->db_table . "WHERE Reference= ? LIMIT 0,1";
-
-        //     $stmt = $this->conn->prepare($sqlQuery);
-        //     $stmt->bindParam(1, $this->Reference);
-        //     $stmt->execute();
-        //     $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-        //     if ($dataRow == 1 {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // }
-
         // CREATE
         public function createUser(){
             $token = bin2hex(random_bytes(16));
@@ -77,31 +60,26 @@
             }
         }
 
-        // Get User From ID
-        public function getUserFromID(){
-            $sqlQuery = "SELECT
-                        user_id, 
-                        Fname, 
-                        Lname,
-                        Reference 
-                      FROM
-                        ". $this->db_table ."
-                    WHERE 
-                       user_id = ?
-                    LIMIT 0,1";
+        // EXIST USER???
+
+        public function getUserFromReference(){
+            $sqlQuery = "SELECT user_id, Fname, Lname FROM `user` WHERE Reference = :Reference LIMIT 0,1";
 
             $stmt = $this->conn->prepare($sqlQuery);
 
-            $stmt->bindParam(1, $this->Reference);
-
+            $stmt->bindParam(":Reference", $this->Reference);
             $stmt->execute();
-
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            $count =  $stmt->rowCount();
+            if($count==1)
+            {
+                $this->user_id = $dataRow['user_id'];
+                return $dataRow['user_id'];
+            } else {
+                return false;
+            }
+    
             
-            $this->Fname = $dataRow['Fname'];
-            $this->Lname = $dataRow['Lname'];
-            $this->Email = $dataRow['Email'];
-            $this->Reservation = $dataRow['Reservation'];
         }        
 
         // UPDATE
