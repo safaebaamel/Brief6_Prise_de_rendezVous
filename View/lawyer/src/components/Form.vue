@@ -17,6 +17,7 @@ export default {
     data() {
         return {
             Reference: '',
+            isAuth: false
         }
     },
     methods:{
@@ -34,11 +35,22 @@ export default {
         .then(response => response.text())
         .then(function(result) {
             var obj = JSON.parse(result)
-            console.log(obj)
-            } )
-            
-        .catch(error => console.log('error', error));
+            console.log(obj);
+            })
+
+        if (obj.response == "true") {
+                sessionStorage.setItem("Reference", this.Reference);
+                this.isAuth = true;
+                this.redirection();
+        } 
+        },
+        redirection() {
+        if (this.isAuth == true) {
+            this.$router.push({ path: "/Reservation" });
+        } else {
+            this.$router.push({ path: "/Home" });
         }
+    },
     }
 
 }
