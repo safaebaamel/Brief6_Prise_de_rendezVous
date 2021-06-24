@@ -26,9 +26,17 @@ export default {
             Reference: this.Reference,
         };
       console.log(data);
-        fetch("http://localhost/Brief6/ApiUserController/getInfoFromReference")
+       await fetch("http://localhost/Brief6/ApiUserController/getInfoFromReference",{
+           method : "POST",
+           header: "Content-type: application/json",
+           body: JSON.stringify(data)
+       }  )
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(function(result) {
+            var obj = JSON.parse(result)
+            console.log(obj)
+            } )
+            
         .catch(error => console.log('error', error));
         }
     }
