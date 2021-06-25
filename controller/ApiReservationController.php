@@ -1,7 +1,11 @@
 <?php
 
-    class ApiReservationController {
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Allow-Methods: POST");
+        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    class ApiReservationController {
 
         public function readReservation() {
             header("Access-Control-Allow-Origin: *");
@@ -16,10 +20,7 @@
             
             $data = json_decode(file_get_contents("php://input"));
 
-            // $reservation->Reservation_id = $data->Reservation_id;
-            // $reservation->creaneau_id = $data->creneau_id;
-            // $reservation->date = $data->date;
-            // $reservation->subject = $data->subject;
+            
                     
             $stm = $reservation->getAllReservation();
             $countReservation = $stm->rowCount();
@@ -50,11 +51,7 @@
         }
 
         public function createReservation() {  
-            header("Access-Control-Allow-Origin: *");
-            header("Content-Type: application/json; charset=UTF-8");
-            header("Access-Control-Allow-Methods: POST");
-            header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-        
+            
             $database = new Database();
             $db = $database->getConnection();
             
@@ -66,7 +63,7 @@
             $reservation->user_id = $data->user_id;
             $reservation->creneau_id = $data->creneau_id;
             $reservation->date = $data->date;
-            $reservation->subject = $data->subject;
+            $reservation->Subject = $data->Subject;
 
             if($reservation->createReservation()){
                 echo 'Reservation Was Created successfully.';
@@ -90,15 +87,16 @@
             $data = json_decode(file_get_contents("php://input"));
 
             
-            $reservation->reference = $data->reference;
+            $reservation->Reference = $data->Reference;
             
-            if ($reservation->reference->existToken()) {
+            if ($reservation->Reference->existToken()) {
                 if($reservation->reservationToken()){
                     echo 'Reservation Was Created successfully.';
                 } else{
                     echo 'Reservation could not be created.';
                 }
             }
+        }
         
         public function deleteUser() {
             header("Access-Control-Allow-Origin: *");

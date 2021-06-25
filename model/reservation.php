@@ -31,7 +31,7 @@
         // New Reservation
         public function createReservation(){
 
-            $sqlQuery = "INSERT reservaation SET  user_id=:user_id, creneau_id=:creneau_id, date=:date, subject=:subject"; 
+            $sqlQuery = "INSERT reservaation SET  user_id=:user_id, creneau_id=:creneau_id, date=:date, Subject=:Subject"; 
 
             $stmt = $this->conn->prepare($sqlQuery);
         
@@ -40,14 +40,14 @@
             $this->user_id=htmlspecialchars(strip_tags($this->user_id));
             $this->creneau_id=htmlspecialchars(strip_tags($this->creneau_id));
             $this->date=htmlspecialchars(strip_tags($this->date));
-            $this->subject=htmlspecialchars(strip_tags($this->subject));
+            $this->Subject=htmlspecialchars(strip_tags($this->Subject));
            
         
             // bind data
             $stmt->bindParam(":creneau_id", $this->creneau_id);
             $stmt->bindParam(":user_id", $this->user_id);
             $stmt->bindParam(":date", $this->date);
-            $stmt->bindParam(":subject", $this->subject);
+            $stmt->bindParam(":Subject", $this->Subject);
         
             if($stmt->execute()){
                return true;

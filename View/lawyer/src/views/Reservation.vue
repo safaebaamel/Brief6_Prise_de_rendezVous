@@ -1,9 +1,9 @@
 <template>
     <form @submit.prevent="submitReservation">
       <label>Reservation</label>
-      <input type="date" required v-model="date">
-      <input type="text" placeholder="Subject" required v-model="subject">
-      <select id="cren" v-model="creneau">
+      <input type="date" max="25-06-2021" required v-model="date">
+      <input type="text" placeholder="Subject" required v-model="Subject">
+      <select id="cren" v-model="time_slot">
           <option value="1">From 11:00AM to 11:30AM</option>
           <option value="2">From 12:00PM to 12:30PM</option>
           <option value="3">From 13:00PM to 13:30PM</option>
@@ -20,8 +20,41 @@
 <script>
 
 export default {
-  
-}
+  name: "Reservation",
+  data() {
+    return {
+      subject: "",
+      date: "",
+      time_slot: "",
+    };
+  },
+  methods: {
+    async submitReservation() {
+      let res = await fetch(
+        "http://localhost/Brief6/ApiReservationController/createReservation",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: sessionStorage.getItem("id_user"),
+            creneau_id: this.time_slot,
+            Subject: this.Subject,
+            date: this.date,
+          }),
+        }
+      );
+      let data = await res.json();
+      console.log(data);
+    },
+    mylogout: function () {
+      sessionStorage.removeItem("id_user");
+      this.$router.push({ name: "Form" });
+    },
+  },
+};
+
 
 </script>
 <style scoped>
