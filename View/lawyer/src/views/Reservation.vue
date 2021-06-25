@@ -3,7 +3,7 @@
       <label>Reservation</label>
       <input type="date" max="25-06-2021" required v-model="date">
       <input type="text" placeholder="Subject" required v-model="Subject">
-      <select id="cren" v-model="time_slot">
+      <select id="cren" placeholder="Creneau" v-model="time_slot">
           <option value="1">From 11:00AM to 11:30AM</option>
           <option value="2">From 12:00PM to 12:30PM</option>
           <option value="3">From 13:00PM to 13:30PM</option>
