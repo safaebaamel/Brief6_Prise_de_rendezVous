@@ -12,48 +12,85 @@
 </template>
 
 <script>
+// export default {
+//     name: 'Form',
+//     data() {
+//         return {
+//             Reference: '',
+//             isAuth: false
+//         }
+//     },
+//     methods:{
+//         async handleSubmit(){
+
+//         const data = {
+//             Reference: this.Reference,
+//         };
+//       console.log(data);
+//        await fetch("http://localhost/Brief6/ApiUserController/getInfoFromReference",{
+//            method : "POST",
+//            header: "Content-type: application/json",
+//            body: JSON.stringify(data)
+//        }  )
+//         .then(response => response.text())
+//         .then(function(result) {
+//             var obj = JSON.parse(result)
+//             console.log(obj);
+//             })
+//         if (obj.response == "true") {
+//                 sessionStorage.setItem("Reference", this.Reference);
+//                 this.isAuth = true;
+//                 this.redirection();
+//         } 
+//         },
+//         redirection() {
+//         if (this.isAuth == true) {
+//             this.$router.push({ path: "/Reservation" });
+//         } else {
+//             this.$router.push({ path: "/Home" });
+//         }
+//     },
+//     }
+
+// }
 export default {
-    name: 'Form',
-    data() {
-        return {
-            Reference: '',
-            isAuth: false
-        }
-    },
-    methods:{
-        async handleSubmit(){
-
-        const data = {
+  name: "Form",
+  data() {
+    return {
+      Reference: "",
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      // const data = {
+      //   reference_user: this.reference_user,
+      // };
+      let res = await fetch(
+        "http://localhost/Brief6/ApiUserController/getInfoFromReference",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             Reference: this.Reference,
-        };
-      console.log(data);
-       await fetch("http://localhost/Brief6/ApiUserController/getInfoFromReference",{
-           method : "POST",
-           header: "Content-type: application/json",
-           body: JSON.stringify(data)
-       }  )
-        .then(response => response.text())
-        .then(function(result) {
-            var obj = JSON.parse(result)
-            console.log(obj);
-            })
-
-        if (obj.response == "true") {
-                sessionStorage.setItem("Reference", this.Reference);
-                this.isAuth = true;
-                this.redirection();
-        } 
-        },
-        redirection() {
-        if (this.isAuth == true) {
-            this.$router.push({ path: "/Reservation" });
-        } else {
-            this.$router.push({ path: "/Home" });
+          }),
         }
+      );
+      let data = await res.json();
+      console.log(data.id_user);
+      if (data.existe == true) {
+        sessionStorage.setItem("id_user", data.id_user);
+        this.$router.push({ name: "Reservation" });
+      }
     },
-    }
-
-}
+  },
+  // beforeMount() {
+  //   if (sessionStorage.getItem("Reference")) {
+  //     this.$router.push({ name: "Reservation" });
+  //   }
+  // },
+};
 </script>
 
 <style>

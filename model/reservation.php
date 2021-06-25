@@ -125,5 +125,21 @@
             return false;
         }
 
+        public function getTimeSlote() {
+
+            $query = "SELECT * FROM creneau WHERE creneau_id not in (
+              SELECT reservaation.creneau_id FROM reservaation 
+              INNER JOIN  creneau ON reservaation.creneau_id = creneau.creneau_id
+              WHERE reservaation.date = ?
+              )";
+      
+            // Prepare statement
+            $stmt = $this->conn->prepare($query);
+            // Execute query
+            $stmt->execute([$this->date]);
+      
+            return $stmt;
+        }
+
     }
 ?>
