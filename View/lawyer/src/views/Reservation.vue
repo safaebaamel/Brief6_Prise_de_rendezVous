@@ -15,9 +15,8 @@
       </select>
 
       <div class="submit">
-          <button>Submit</button>
+          <button v-on:click="show">Submit</button>
       </div>
-
   </form>
 </template>
 
@@ -42,7 +41,7 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user_id: sessionStorage.getItem("id_user"),
+              user_id: sessionStorage.getItem("id_user"),
             creneau_id: this.time_slot,
             Subject: this.Subject,
             date: this.date,
@@ -51,11 +50,15 @@ export default {
       );
       let data = await res.json();
       console.log(data);
+    this.show = true;
     },
     mylogout: function () {
       sessionStorage.removeItem("id_user");
       this.$router.push({ name: "Form" });
     },
+  show: function () {
+      alert("Reservation Done!");
+  }
   },
 };
 
