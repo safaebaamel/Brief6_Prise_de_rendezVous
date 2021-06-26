@@ -112,7 +112,7 @@
         // DELETE USER
 
         function deleteReservation(){
-            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE user_id = ?";
+            $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE Reservation_id = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
             $this->user_id=htmlspecialchars(strip_tags($this->user_id));
