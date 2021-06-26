@@ -1,5 +1,8 @@
 <template>
     <form @submit.prevent="submitReservation">
+      <div class="dash">
+        <router-link to="/dash" ><button>Check My Reservations</button></router-link>
+      </div>
       <label>Reservation</label>
       <input type="date" max="25-06-2021" required v-model="date">
       <input type="text" placeholder="Subject" required v-model="Subject">
@@ -14,6 +17,7 @@
       <div class="submit">
           <button>Submit</button>
       </div>
+
   </form>
 </template>
 
@@ -57,7 +61,8 @@ export default {
 
 
 </script>
-<style scoped>
+<style scoped lang="scss">
+
     form{
     max-width: 420px;
     margin: 30px auto;
@@ -95,5 +100,31 @@ button {
 .submit {
     text-align: center;
 }
+// #dash {
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   text-align: center;
+//   color: #2c3e50;
+//   align-self: center;
+// }
+#dash {
+  padding: 30px;
 
+  button {
+    font-weight: bold;
+    color: #2c3e50;
+    text-decoration: none;
+    border: 1px dotted rgb(86, 85, 170);
+    border-radius: 20px;
+    border-spacing: 1px;
+    padding: 10px;
+    margin: 10px;
+    &.router-link-exact-active {
+      color: #283672;
+    }
+}:hover {
+      background-color: #aeb7df;
+    }
+  }
 </style>
