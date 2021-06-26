@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submitReservation">
       <div class="dash">
-        <router-link to="/dash" ><button>Check My Reservations</button></router-link>
+        <center><router-link to="/dash" ><button>Check My Reservations</button></router-link></center>
       </div>
       <label>Reservation</label>
       <input type="date" max="25-06-2021" required v-model="date">
@@ -94,6 +94,7 @@ button {
     border: 0;
     padding:10px 20px;
     margin-top: 20px;
+    text-decoration: none;
     color: white;
     border-radius: 20px;
 }
