@@ -4,7 +4,7 @@
         <center><router-link to="/dash" ><button>Check My Reservations</button></router-link></center>
       </div>
       <label>Reservation</label>
-      <input @change="getTime_slots" type="date" max="25-06-2021" required v-model="date">
+      <input :min="getTodayDate()" @change="getTime_slots" type="date" max="25-06-2021" required v-model="date">
       <input type="text" placeholder="Subject" required v-model="Subject">
       <select  id="cren" placeholder="Creneau" v-model="time_slot">
           <option v-for="o in obj"  :key="o.Creneau_id" :value="o.Creneau_id">{{o.time_slot}}</option>
@@ -30,9 +30,18 @@ export default {
       date: "",
       time_slot: "",
       obj : ""
+
     };
   },
   methods: {
+    getTodayDate() {
+      var today = new Date()
+       var dd = String(today.getDate()).padStart(2, '0')
+          var mm = String(today.getMonth() + 1).padStart(2, '0')
+          var yyyy = today.getFullYear()
+          today = yyyy + '-' + mm + '-' + dd
+          return today
+    },
     getTime_slots() {
         var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
