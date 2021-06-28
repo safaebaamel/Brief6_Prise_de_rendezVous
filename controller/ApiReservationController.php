@@ -112,6 +112,7 @@
         }
 
         public function CheckCreneau() {
+
             $database = new Database();
             $db = $database->getConnection();
             
@@ -143,8 +144,28 @@
             } else {
                 echo json_decode(array('message' => 'Nothing!'));
             }
+        }
 
-
+        public function updateReservation() {
+            $database = new Database();
+            $db = $database->getConnection();
+        
+            $rdv = new reservation($db);
+        
+        
+            $data = json_decode(file_get_contents("php://input"));
+            
+            $rdv->Reservation_id = $data->Reservation_id;
+        
+            $rdv->Subject = $data->Subject;
+            $rdv->date = $data->date;
+            $rdv->Creneau_id = $data->Creneau_id;
+        
+            if($rdv->UpdateRDV()){
+                echo 'RDV update successfully.';
+            } else{
+                echo 'RDV could not be updated.';
+            }
         }
 
 }

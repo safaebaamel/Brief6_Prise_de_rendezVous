@@ -135,5 +135,27 @@
             return  $req;
         }
 
+        public function UpdateRDV() {
+
+            $query = 'UPDATE reservaation SET  Subject=:Subject, date=:date ,Creneau_id=:Creneau_id WHERE Reservation_id=:Reservation_id';
+            $stmt = $this->conn->prepare($query);
+
+            $this->Reservation_id = htmlspecialchars(strip_tags($this->Reservation_id));
+            $this->Subject = htmlspecialchars(strip_tags($this->Subject));
+            $this->date = htmlspecialchars(strip_tags($this->date));
+            $this->Creneau_id = htmlspecialchars(strip_tags($this->Creneau_id));
+
+            $stmt->bindParam(':Reservation_id', $this->Reservation_id);
+            $stmt->bindParam(':Subject', $this->Subject);
+            $stmt->bindParam(':date', $this->date);
+            $stmt->bindParam(':Creneau_id', $this->Creneau_id);
+
+            if ($stmt->execute()){
+                return true;
+                }
+
+            return false;
+        }
+
     }
 ?>
