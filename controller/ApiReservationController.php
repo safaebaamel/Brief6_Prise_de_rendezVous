@@ -103,7 +103,7 @@
             
             $data = json_decode(file_get_contents("php://input"));
 
-            $client->user_id = $data->user_id;
+            $client->Reservation_id = $data->Reservation_id;
             if($client->deleteReservation()){
                 echo json_encode("Reservation deleted.");
             } else{

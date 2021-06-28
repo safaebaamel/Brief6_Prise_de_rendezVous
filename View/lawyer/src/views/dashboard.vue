@@ -9,15 +9,16 @@
                   <th>Date</th>
                   <th>Creneau</th>
                   <th>Subject</th>
-                  <th>Status</th>
+                  <th colspan="2">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="table in tables" :key="table.Reservation_id">
                   <th scope="row">{{ table.date }}</th>
-                  <td>{{ table.creneau_id }}</td>
+                  <td>{{ table.creneau_id}}</td>
                   <td>{{ table.Subject }}</td>
-                  <th>Edit</th>
+                  <td><button @click="getRDV_id(table.Reservation_id)" >Edit</button></td>
+                  <td><button @click="deleteReservation(table.Reservation_id)" >Delete</button></td>
 
                 </tr>
               </tbody>
@@ -40,6 +41,31 @@ export default {
     };
   },
   methods: {
+    deleteReservation(rdv_id) {
+        console.log(rdv_id);
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var raw = JSON.stringify({
+            "Reservation_id": rdv_id
+          });
+
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+
+          fetch("http://localhost/Brief6/ApiReservationController/deleteReservation", requestOptions)
+            .then(response => response.text())
+            .then(function(result) {
+                console.log(result),
+                location.reload()
+            })
+            .catch(error => console.log('error', error));
+      
+    },
     delete(id) {
       console.log(id);
       const data = {

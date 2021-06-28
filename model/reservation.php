@@ -115,9 +115,9 @@
             $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE Reservation_id = ?";
             $stmt = $this->conn->prepare($sqlQuery);
         
-            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+            $this->Reservation_id=htmlspecialchars(strip_tags($this->Reservation_id));
         
-            $stmt->bindParam(1, $this->user_id);
+            $stmt->bindParam(1, $this->Reservation_id);
         
             if($stmt->execute()){
                 return true;
