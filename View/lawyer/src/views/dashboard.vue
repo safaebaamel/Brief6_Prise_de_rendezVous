@@ -17,7 +17,6 @@
                   <th scope="row">{{ table.date }}</th>
                   <td>{{ table.creneau_id }}</td>
                   <td>{{ table.Subject }}</td>
-                  <th>Delete</th>
                   <th>Edit</th>
 
                 </tr>
@@ -67,27 +66,6 @@ export default {
       sessionStorage.setItem("Reservation_id", table.Reservation_id);
       this.redirection();
     },
-  //   async created() {
-  //   // const reference = {
-  //   //   reference: sessionStorage.getItem("reference"),
-  //   // };
-  //   var res = await fetch(
-  //     "http://localhost/Brief6/ApiReservationController/GetFromId",
-  //     {
-  //       method: "POST",
-  //       header: "Content-type: application/json",
-  //       body: JSON.stringify(
-  //         {
-  //           "user_id" : sessionStorage.getItem("id_user")
-  //         }
-  //       ),
-  //     }
-  //   );
-  //   if (res.status === 200) {
-  //     this.tables = await res.json();
-  //     console.log(this.tables);
-  //   }
-  // },
 
     getClientAppointment: async function () {
       let res = await fetch(
@@ -121,6 +99,16 @@ this.getClientAppointment();
 
 </script>
 <style scoped lang="scss">
+table, td, th {
+  border: 1px dotted rgb(6, 41, 98);
+  text-align: center;
+  
+}
 
+table {
+  width: 60%;
+
+  border-collapse: collapse;
+}
 </style>
 
