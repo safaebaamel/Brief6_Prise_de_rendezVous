@@ -169,5 +169,16 @@
             return $stmt;
         }
 
+        public function getSpecificReservation()
+        {
+            $query = "SELECT * FROM reservaation r INNER JOIN creneau c ON c.Creneau_id = r.creneau_id INNER JOIN user u ON u.user_id = r.user_id where r.Reservation_id =:Reservation_id";
+            $stmt = $this->conn->prepare($query);
+            $this->Reservation_id=htmlspecialchars(strip_tags($this->Reservation_id));
+            $stmt->bindParam(":Reservation_id", $this->Reservation_id);
+            $stmt -> execute();
+
+            return $stmt;
+        }
+
     }
 ?>

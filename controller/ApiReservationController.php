@@ -200,7 +200,43 @@
                     array("no")
                 );
             }
+        }
+
+        public function EditReservation() {
+
+                        
+            $database = new Database();
+            $db = $database->getConnection();
+
+
+            $rdv = new reservation($db);
+
+            $data = json_decode(file_get_contents("php://input"));
+            $rdv->Reservation_id = $data->Reservation_id;
+
+            $result = $rdv->getSpecificReservation();
+            $num = $result->rowCount();
+            if ($num > 0) {
+                $rdv_arr = array();
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+
+                    $rdv_item = array(
+                        'Reservation_id' => $Reservation_id,
+                        'date' => $date,
+                        'Subject' => $Subject,
+                        'Creneau_id' =>$Creneau_id
+                    );
+
+                    array_push($rdv_arr, $rdv_item);
+                }
+                echo json_encode($rdv_arr);
+            } else {
+                echo json_encode(
+                    array("NAH")
+                );
             }
+        }
 
 }
 
