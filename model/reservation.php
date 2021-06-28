@@ -157,5 +157,17 @@
             return false;
         }
 
+        public function getSingleRDV()
+        {
+            $query = "SELECT * FROM reservaation r INNER JOIN creneau c ON c.Creneau_id = r.creneau_id INNER JOIN user u ON u.user_id = r.user_id where u.user_id =:user_id";
+            $stmt = $this->conn->prepare($query);
+            $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+            $stmt->bindParam(":user_id", $this->user_id);
+            $stmt -> execute();
+
+
+            return $stmt;
+        }
+
     }
 ?>

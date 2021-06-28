@@ -168,6 +168,40 @@
             }
         }
 
+        public function GetFromId() {
+            $database = new Database();
+            $db = $database->getConnection();
+
+
+            $rdv = new reservation($db);
+
+            $data = json_decode(file_get_contents("php://input"));
+            $rdv->user_id = $data->user_id;
+
+            $result = $rdv->getSingleRDV();
+            $num = $result->rowCount();
+            if ($num > 0) {
+                $rdv_arr = array();
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+
+                    $rdv_item = array(
+                        'Reservation_id' => $Reservation_id,
+                        'date' => $date,
+                        'creneau_id' => $creneau_id,
+                        'Subject' => $Subject
+                    );
+
+                    array_push($rdv_arr, $rdv_item);
+                }
+                echo json_encode($rdv_arr);
+            } else {
+                echo json_encode(
+                    array("no")
+                );
+            }
+            }
+
 }
 
 
