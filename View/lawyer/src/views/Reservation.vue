@@ -4,17 +4,17 @@
         <center><router-link to="/dash" ><button>Check My Reservations</button></router-link></center>
       </div>
       <label>Reservation</label>
-      <input type="date" max="25-06-2021" required v-model="date">
+      <input @change="getTime_slots" type="date" max="25-06-2021" required v-model="date">
       <input type="text" placeholder="Subject" required v-model="Subject">
-      <select id="cren" placeholder="Creneau" v-model="time_slot">
-          <option value="1">From 11:00AM to 11:30AM</option>
-          <option value="2">From 12:00PM to 12:30PM</option>
+      <select  id="cren" placeholder="Creneau" v-model="time_slot">
+          <option v-for="o in obj"  :key="o.Creneau_id" :value="o.Creneau_id">{{o.time_slot}}</option>
+          <!-- <option value="2">From 12:00PM to 12:30PM</option>
           <option value="3">From 13:00PM to 13:30PM</option>
           <option value="4">From 14:00PM to 14:30PM</option>
-          <option value="5">From 15:00PM to 15:30PM</option>
+          <option value="5">From 15:00PM to 15:30PM</option> -->
       </select>
-
-      <div class="submit">
+<!-- <option v-for="o in obj" :key="o.TimeSlotID" selected=""  :value="o.TimeSlotID">{{o.TimeSlot}}</option>
+ -->      <div class="submit">
           <button v-on:click="show">Submit</button>
       </div>
   </form>
@@ -29,9 +29,36 @@ export default {
       subject: "",
       date: "",
       time_slot: "",
+      obj : ""
     };
   },
   methods: {
+    getTime_slots() {
+        var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var raw = JSON.stringify({
+            "date": this.date,
+          });
+
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+          var self = this
+          fetch("http://localhost/Brief6/ApiReservationController/CheckCreneau", requestOptions)
+            .then(response => response.text())
+            .then(function(result) {
+                 console.log(result)
+                 var availableTimes = JSON.parse(result)
+                 console.log(availableTimes)
+                 self.obj = availableTimes
+  
+            })
+            .catch(error => console.log('error', error));
+    },
     async submitReservation() {
       let res = await fetch(
         "http://localhost/Brief6/ApiReservationController/createReservation",
