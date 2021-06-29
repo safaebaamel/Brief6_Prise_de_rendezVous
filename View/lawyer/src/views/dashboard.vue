@@ -9,7 +9,7 @@
                   <th>Date</th>
                   <th>Creneau</th>
                   <th>Subject</th>
-                  <th colspan="2">Status</th>
+                  <th colspan="1">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -17,7 +17,7 @@
                   <th scope="row">{{ table.date }}</th>
                   <td>{{ table.creneau_id}}</td>
                   <td>{{ table.Subject }}</td>
-                  <td><button @click="getRDV_id(table.Reservation_id)" >Edit</button></td>
+                  <!-- <td><button @click="getRDV_id(table.Reservation_id)" >Edit</button></td> -->
                   <td><button @click="deleteReservation(table.Reservation_id)" >Delete</button></td>
 
                 </tr>

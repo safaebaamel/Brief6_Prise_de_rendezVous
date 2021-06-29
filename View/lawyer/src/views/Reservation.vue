@@ -36,11 +36,11 @@ export default {
   methods: {
     getTodayDate() {
       var today = new Date()
-       var dd = String(today.getDate()).padStart(2, '0')
-          var mm = String(today.getMonth() + 1).padStart(2, '0')
-          var yyyy = today.getFullYear()
-          today = yyyy + '-' + mm + '-' + dd
-          return today
+      var day = String(today.getDate()).padStart(2, '0')
+      var month = String(today.getMonth() + 1).padStart(2, '0')
+      var year = today.getFullYear()
+      today = year + '-' + month + '-' + day
+      return today
     },
     getTime_slots() {
         var myHeaders = new Headers();
